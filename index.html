@@ -350,15 +350,12 @@
 
             <div class="single-portfolio col-sm-4 all mockup">
               <div class="relative">
-                <div class="lg-dynamic" data-lg-type="portrait" data-lg-count="12" class="thumb">
+                <div class="thumb lg-dynamic-click" data-lg-type="portrait">
                   <div class="overlay overlay-bg"></div>
-                  <img class="image img-fluid" src="images/p1.jpg" alt="">
+                  <img class="image img-fluid" src="images/p1.jpg">
                 </div>
-<!--                 <a href="images/p1.jpg" class="img-pop-up">  
-                  <div class="middle">
-                    <div class="text align-self-center d-flex"><img src="images/p1.jpg" alt=""></div>
-                  </div>
-                </a> -->
+                <div class="lg-dynamic" data-lg-type="portrait" data-lg-count="12" data-lg-hash="1">
+                </div>
               </div>
               <div class="p-inner">
                 <h4>Portraits</h4>
@@ -368,15 +365,12 @@
 
             <div class="single-portfolio col-sm-4 all mockup">
               <div class="relative">
-                <div class="lg-dynamic" data-lg-type="interior" data-lg-count="10" class="thumb">
+                <div class="thumb lg-dynamic-click" data-lg-type="interior">
                   <div class="overlay overlay-bg"></div>
-                  <img class="image img-fluid" src="images/p2.jpg" alt="">
+                  <img class="image img-fluid" src="images/p2.jpg">
                 </div>
-                <!-- <a href="images/p2.jpg" class="img-pop-up">  
-                  <div class="middle">
-                    <div class="text align-self-center d-flex"><img src="images/laptop_1.jpg" alt=""></div>
-                  </div>
-                </a> -->
+                <div class="lg-dynamic" data-lg-type="interior" data-lg-count="10" data-lg-hash="2">
+                </div>
               </div>
               <div class="p-inner">
                 <h4>Interior</h4>
@@ -386,15 +380,12 @@
 
             <div class="single-portfolio col-sm-4 all packaging">
               <div class="relative">
-                <div class="lg-dynamic" data-lg-type="landscape" data-lg-count="7" class="thumb">
+                <div class="thumb lg-dynamic-click" data-lg-type="landscape">
                   <div class="overlay overlay-bg"></div>
-                  <img class="image img-fluid" src="images/p3.jpg" alt="">
+                  <img class="image img-fluid" src="images/p3.jpg">
                 </div>
-                <!-- <a href="images/p3.jpg" class="img-pop-up">  
-                  <div class="middle">
-                    <div class="text align-self-center d-flex"><img src="images/laptop_1.jpg" alt=""></div>
-                  </div>
-                </a>-->
+                <div class="lg-dynamic" data-lg-type="landscape" data-lg-count="7" data-lg-hash="3">
+                </div>
               </div>
               <div class="p-inner">
                 <h4>Landscape</h4>
@@ -703,26 +694,40 @@
     <script>
       $(document).ready(function(){
 
-        $('.lg-dynamic').on('click', function() {
+        function build_lg_image(type, index) {
+          var div = $('<div></div>');
+          div.attr('data-src', 'images/' + type + '_i' + index + '.jpg')
+
+          var img = $('<img/>');
+          img.attr('src', 'images/' + type + '_i' + index + '_thumb.jpg')
+
+          div.append(img);
+
+          if (index == 1) {
+            div.attr('class', type + ' first');
+          }
+
+          return div;
+        }  
+
+        $('.lg-dynamic').each(function() {
           var type = $(this).data('lg-type');
           var count = $(this).data('lg-count');
-          var elements = [];
+          var hash = $(this).data('lg-hash');
 
           for (var i = 1; i <= count; i++) {
-            elements.push({
-              "src": 'images/' + type+ '_i' + i + '.jpg',
-              "thumb": 'images/' + type + '_i' + i + '_thumb.jpg'
-            });
+            $(this).append(build_lg_image(type, i));
           }
 
           $(this).lightGallery({
-            download: false,
-            thumbMargin: 3,
-            dynamic: true,
-            dynamicEl: elements
-          })
+            galleryId: hash
+          });
         });
 
+        $('.lg-dynamic-click').on('click', function() {
+          var type = $(this).data('lg-type');
+          $('.' + type + '.first').click();
+        });
       });
     </script>
 

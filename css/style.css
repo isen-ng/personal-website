@@ -639,6 +639,10 @@ a {
   background-color: rgba(13,10,10, 0.5);
 }
 
-.lg-dynamic {
+.lg-dynamic-click {
   cursor: pointer;
+}
+
+.lg-dynamic {
+  display: none;
 }
